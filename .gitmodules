@@ -1,3 +1,6 @@
 [submodule "home/.zgen"]
 	path = home/.zgen
 	url = https://github.com/tarjoilija/zgen.git
+[submodule "home/.zprezto"]
+	path = home/.zprezto
+	url = https://github.com/sorin-ionescu/prezto.git
