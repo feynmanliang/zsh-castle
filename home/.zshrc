@@ -13,7 +13,7 @@ fi
 # Customize to your needs...
 
 # Include personal settings (customize ~/.secrets as needed)
-if [ -e ~/.secrets ]; then
+if [ -e ~/.secrets/zsh_env ]; then
   source ~/.secrets/zsh_env
 fi
 
