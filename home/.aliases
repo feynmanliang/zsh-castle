@@ -77,6 +77,8 @@ alias ipythonnb="ipython notebook --ip=127.0.0.1 --pylab inline"
 # secure ssh dns
 #alias ssh="TERM=xterm ssh-dnssec"
 
+# color tmux
+alias tmux="TERM=screen-256color-bce tmux"
 # attach to tmux
 # alias at="tmux new-session -t \#Prezto || tmux new-session -s \#Prezto"
 at() {
