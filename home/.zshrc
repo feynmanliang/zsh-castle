@@ -38,9 +38,10 @@ export warn_time="86400"  # (seconds)
 export pacman_program="aura"
 
 #
-# homeshick
+# homeshick and mr
 #
 source ~/.homesick/repos/homeshick/homeshick.sh
+PATH=$PATH:~/.homesick/repos/myrepos/
 
 
 # Load RVM into a shell session *as a function*
@@ -53,7 +54,7 @@ test -r ~/algs4/bin/config.sh && source ~/algs4/bin/config.sh
 export NODE_PATH=/usr/lib/node_modules:$NODE_PATH
 
 # Add Gems
-export PATH=$PATH:/home/fliang/.gem/ruby/2.3.0/bin
+#export PATH=$PATH:/home/fliang/.gem/ruby/2.3.0/bin
 
 # Set Java Home
 export JAVA_HOME=/usr/lib/jvm/java-default-runtime/
