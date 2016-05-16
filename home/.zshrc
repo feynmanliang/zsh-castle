@@ -59,9 +59,19 @@ export PATH=$PATH:/home/fliang/.gem/ruby/2.3.0/bin
 export JAVA_HOME=/usr/lib/jvm/java-default-runtime/
 
 # Add Torch
-. /home/fliang/torch/install/bin/torch-activate
+. $HOME/bachbot/torch/install/bin/torch-activate
+
+# Add mlsalt local libraries
+export PATH=$PATH:~/usr/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-7.0/lib64:~/usr/lib
+export C_INCLUDE_PATH=$C_INCLUDE_PATH:~/usr/include
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:~/usr/include
+
+# Add humdrum
+export PATH=/remote/mlsalt-2015/fl350/bachbot/humdrum-tools/humdrum/bin:$PATH
+export PATH=/remote/mlsalt-2015/fl350/bachbot/humdrum-tools/humextra/bin:$PATH
 
 # Print system info
-if [ "$PS1" ]; then
-  alsi
-fi
+#if [ "$PS1" ]; then
+#  alsi
+#/fliangfi
