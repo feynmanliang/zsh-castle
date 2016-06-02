@@ -59,18 +59,27 @@ export NODE_PATH=/usr/lib/node_modules:$NODE_PATH
 # Set Java Home
 export JAVA_HOME=/usr/lib/jvm/java-default-runtime/
 
-# Add Torch
-. $HOME/bachbot/torch/install/bin/torch-activate
-
 # Add mlsalt local libraries
-export PATH=$PATH:~/usr/bin
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-7.0/lib64:~/usr/lib
-export C_INCLUDE_PATH=$C_INCLUDE_PATH:~/usr/include
-export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:~/usr/include
+#export PATH=~/usr/bin:$PATH
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+#export LIBRARY_PATH=~/usr/lib/:/usr/lib/:/lib/:$LIBRARY_PATH
+export C_INCLUDE_PATH=~/usr/include:~/usr/include/ncurses:$C_INCLUDE_PATH
+export CPLUS_INCLUDE_PATH=~/usr/include:~/usr/include/ncurses:$CPLUS_INCLUDE_PATH
+export PKG_CONFIG_PATH=/home/fl350/usr/lib/pkgconfig/:/usr/lib/x86_64-linux-gnu/pkgconfig/
 
-# Add humdrum
-export PATH=/remote/mlsalt-2015/fl350/bachbot/humdrum-tools/humdrum/bin:$PATH
-export PATH=/remote/mlsalt-2015/fl350/bachbot/humdrum-tools/humextra/bin:$PATH
+export CFLAGS="-D_FORCE_INLINES $CXXFLAGS"
+export CXXFLAGS="-D_FORCE_INLINES $CXXFLAGS"
+
+# add pyenv
+export PATH="/home/fl350/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# Tensorflow setup
+export TF_MIN_GPU_MULTIPROCESSOR_COUNT=2
+
+# Activate BachBot
+source ~/bachbot/scripts/activate
 
 # Print system info
 #if [ "$PS1" ]; then

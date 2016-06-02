@@ -8,7 +8,7 @@ alias -g H='| head'
 alias -g L="| less"
 alias -g N="| /dev/null"
 alias -g S='| sort'
-alias -g A='| ack' # now you can do: ls foo G something
+alias -g A='| ag' # now you can do: ls foo G something
 
 # PS
 alias psa="ps aux"
@@ -75,7 +75,7 @@ alias secure_chromium="chromium --proxy-server=socks://localhost:4711"
 alias ipythonnb="ipython notebook --ip=127.0.0.1 --pylab inline"
 
 # secure ssh dns
-#alias ssh="TERM=xterm ssh-dnssec"
+alias ssh="TERM=xterm-256color ssh -X"
 
 # color tmux
 alias tmux="TERM=screen-256color-bce tmux"
