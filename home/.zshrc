@@ -37,11 +37,18 @@ fi
 export warn_time="86400"  # (seconds)
 export pacman_program="aura"
 
+# Reset paths here because clobbered by /etc/zsh/profile->/etc/profile
+typeset -gU path
+path=(
+  /usr/local/{bin,sbin}
+  $HOME/bin
+  $path
+)
+
 #
 # homeshick
 #
 source ~/.homesick/repos/homeshick/homeshick.sh
-
 
 # Set Java Home
 export JAVA_HOME=/usr/lib/jvm/java-default-runtime/
@@ -55,3 +62,13 @@ fi
 export NVM_DIR="/home/fliang/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 source /usr/share/nvm/init-nvm.sh
+
+
+#
+# Enable keyring for terminal applications
+#
+if [ -n "$DESKTOP_SESSION" ];then
+  eval $(gnome-keyring-daemon --start)
+  export SSH_AUTH_SOCK
+fi
+
