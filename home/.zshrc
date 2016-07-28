@@ -43,25 +43,15 @@ export pacman_program="aura"
 source ~/.homesick/repos/homeshick/homeshick.sh
 
 
-# Load RVM into a shell session *as a function*
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
-# Add algs4.cs.princeton.edu packages
-test -r ~/algs4/bin/config.sh && source ~/algs4/bin/config.sh
-
-# Node Modules
-export NODE_PATH=/usr/lib/node_modules:$NODE_PATH
-
-# Add Gems
-export PATH=$PATH:/home/fliang/.gem/ruby/2.3.0/bin
-
 # Set Java Home
 export JAVA_HOME=/usr/lib/jvm/java-default-runtime/
-
-# Add Torch
-. /home/fliang/torch/install/bin/torch-activate
 
 # Print system info
 if [ "$PS1" ]; then
   alsi
 fi
+
+# Setup nvm (node version manager)
+export NVM_DIR="/home/fliang/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+source /usr/share/nvm/init-nvm.sh
