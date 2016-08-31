@@ -147,6 +147,9 @@ alias latexmkpdf="latexmk -pdf -pvc"
 # find what's listening on ipv4 ports
 alias lsports="lsof -Pn +M -i4"
 
+# neovim
+alias vim="nvim"
+
 # Functions
 #
 # (f)ind by (n)ame

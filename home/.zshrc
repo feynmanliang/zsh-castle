@@ -56,6 +56,9 @@ export NODE_PATH=/usr/lib/node_modules:$NODE_PATH
 # Set Java Home
 export JAVA_HOME=/usr/lib/jvm/java-default-runtime/
 
+# NVM
+source /usr/share/nvm/init-nvm.sh
+
 # Print system info
 #if [ "$PS1" ]; then
 #  alsi
