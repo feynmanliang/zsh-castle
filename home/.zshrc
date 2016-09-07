@@ -37,32 +37,39 @@ fi
 export warn_time="86400"  # (seconds)
 export pacman_program="aura"
 
-# Reset paths here because clobbered by /etc/zsh/profile->/etc/profile
-typeset -gU path
-path=(
-  /usr/local/{bin,sbin}
-  $HOME/bin
-  $path
-)
-
 #
-# homeshick
+# homeshick and mr
 #
 source ~/.homesick/repos/homeshick/homeshick.sh
+PATH=$PATH:~/.homesick/repos/myrepos/
+
+
+# Load RVM into a shell session *as a function*
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# Add algs4.cs.princeton.edu packages
+test -r ~/algs4/bin/config.sh && source ~/algs4/bin/config.sh
+
+# Node Modules
+export NODE_PATH=/usr/lib/node_modules:$NODE_PATH
 
 # Set Java Home
 export JAVA_HOME=/usr/lib/jvm/java-default-runtime/
 
-# Print system info
-if [ "$PS1" ]; then
-  alsi
-fi
-
-# Setup nvm (node version manager)
-export NVM_DIR="/home/fliang/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+# NVM
 source /usr/share/nvm/init-nvm.sh
 
+# Set SSH to use gpg-agent
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+  export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+fi
+
+# Set GPG TTY
+export GPG_TTY=$(tty)
+
+# Refresh gpg-agent tty in case user switches into an X session
+gpg-connect-agent updatestartuptty /bye >/dev/null
 
 #
 # Enable keyring for terminal applications
@@ -72,3 +79,7 @@ if [ -n "$DESKTOP_SESSION" ];then
   export SSH_AUTH_SOCK
 fi
 
+# Print system info
+if [ "$PS1" ]; then
+  alsi
+fi
