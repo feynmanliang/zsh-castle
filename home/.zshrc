@@ -43,7 +43,6 @@ export pacman_program="aura"
 source ~/.homesick/repos/homeshick/homeshick.sh
 PATH=$PATH:~/.homesick/repos/myrepos/
 
-
 # Load RVM into a shell session *as a function*
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
@@ -84,13 +83,7 @@ export GPG_TTY=$(tty)
 # Refresh gpg-agent tty in case user switches into an X session
 gpg-connect-agent updatestartuptty /bye >/dev/null
 
-#
-# Enable keyring for terminal applications
-#
-if [ -n "$DESKTOP_SESSION" ];then
-  eval $(gnome-keyring-daemon --start)
-  export SSH_AUTH_SOCK
-fi
+echo "UPDATESTARTUPTTY" | gpg-connect-agent > /dev/null 2>&1
 
 # Print system info
 if [ "$PS1" ]; then
