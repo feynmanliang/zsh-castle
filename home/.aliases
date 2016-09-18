@@ -150,6 +150,9 @@ alias lsports="lsof -Pn +M -i4"
 # neovim
 alias vim="nvim"
 
+# ipython vi mode
+alias ipython="ipython --TerminalInteractiveShell.editing_mode=vi"
+
 # Functions
 #
 # (f)ind by (n)ame
