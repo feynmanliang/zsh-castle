@@ -86,7 +86,7 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 echo "UPDATESTARTUPTTY" | gpg-connect-agent > /dev/null 2>&1
 
 # kubectl completions
-source <(kbectl completion zsh)
+source <(kubectl completion zsh)
 
 # Print system info
 if [ "$PS1" ]; then
