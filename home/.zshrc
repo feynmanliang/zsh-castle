@@ -43,33 +43,17 @@ export pacman_program="aura"
 source ~/.homesick/repos/homeshick/homeshick.sh
 PATH=$PATH:~/.homesick/repos/myrepos/
 
-# Load RVM into a shell session *as a function*
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
-# Add algs4.cs.princeton.edu packages
-test -r ~/algs4/bin/config.sh && source ~/algs4/bin/config.sh
-
 # Node Modules
 export NODE_PATH=/usr/lib/node_modules:$NODE_PATH
 
 # Set Java Home
 export JAVA_HOME=/usr/lib/jvm/java-default-runtime/
 
-# NVM
-source /usr/share/nvm/init-nvm.sh
-
-# pyenv
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
 # pipsi
 export PATH=~/.local/bin:$PATH
 
 # hub
 eval "$(hub alias -s)"
-
-# fasd
-eval "$(fasd --init auto)"
 
 # Set SSH to use gpg-agent
 unset SSH_AGENT_PID
@@ -85,10 +69,36 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 
 echo "UPDATESTARTUPTTY" | gpg-connect-agent > /dev/null 2>&1
 
+# aws competions
+source /usr/bin/aws_zsh_completer.sh
+
+export GOPATH=~/go
+
+# fuzzy finder
+# Use ag instead of the default find command for listing candidates.
+# - The first argument to the function is the base path to start traversal
+# - Note that ag only lists files not directories
+# - See the source code (completion.{bash,zsh}) for the details.
+_fzf_compgen_path() {
+  ag -g "" "$1"
+}
+
+# Fuzzy finder
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# NVM
+# source /usr/share/nvm/init-nvm.sh
+
+# pyenv
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 # kubectl completions
-source <(kubectl completion zsh)
+# source <(kubectl completion zsh)
+
 
 # Print system info
 if [ "$PS1" ]; then
   alsi
 fi
+
