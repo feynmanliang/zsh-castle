@@ -49,11 +49,11 @@ export NODE_PATH=/usr/lib/node_modules:$NODE_PATH
 # Set Java Home
 export JAVA_HOME=/usr/lib/jvm/java-default-runtime/
 
-# pipsi
-export PATH=~/.local/bin:$PATH
+# Set Go path
+export GOPATH=~/go
 
-# hub
-eval "$(hub alias -s)"
+# Add pipsi binaries to path
+export PATH=~/.local/bin:$PATH
 
 # Set SSH to use gpg-agent
 unset SSH_AGENT_PID
@@ -69,10 +69,11 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 
 echo "UPDATESTARTUPTTY" | gpg-connect-agent > /dev/null 2>&1
 
+# hub
+eval "$(hub alias -s)"
+
 # aws competions
 source /usr/bin/aws_zsh_completer.sh
-
-export GOPATH=~/go
 
 # fuzzy finder
 # Use ag instead of the default find command for listing candidates.
@@ -87,11 +88,17 @@ _fzf_compgen_path() {
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # NVM
-# source /usr/share/nvm/init-nvm.sh
+nvm() {
+  [ -s "/usr/share/nvm/init-nvm.sh" ] && source "/usr/share/nvm/init-nvm.sh"
+  nvm $@
+}
 
 # pyenv
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+pyenv() {
+  eval "$(command pyenv init -)"
+  eval "$(command pyenv virtualenv-init -)"
+  pyenv $@
+}
 
 # kubectl completions
 # source <(kubectl completion zsh)
