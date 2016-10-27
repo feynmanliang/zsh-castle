@@ -53,7 +53,7 @@ export JAVA_HOME=/usr/lib/jvm/java-default-runtime/
 export GOPATH=~/go
 
 # Add pipsi binaries to path
-export PATH=~/.local/bin:$PATH
+export PATH=~/.local/bin:~/bin:$PATH
 
 # Set SSH to use gpg-agent
 unset SSH_AGENT_PID
@@ -98,6 +98,12 @@ pyenv() {
   eval "$(command pyenv init -)"
   eval "$(command pyenv virtualenv-init -)"
   pyenv $@
+}
+
+# rbenv
+rbenv() {
+  eval "$(command rbenv init -)"
+  rbenv $@
 }
 
 # kubectl completions
