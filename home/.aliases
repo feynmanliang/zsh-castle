@@ -149,6 +149,7 @@ alias lsports="lsof -Pn +M -i4"
 
 # neovim
 alias vim="nvim"
+alias vimdiff="nvim -d"
 
 # ipython vi mode
 alias ipython="ipython --TerminalInteractiveShell.editing_mode=vi"
@@ -156,7 +157,7 @@ alias ipython="ipython --TerminalInteractiveShell.editing_mode=vi"
 # Functions
 #
 # (f)ind by (n)ame
-# usage: fn foo 
+# usage: fn foo
 # to find all files containing 'foo' in the name
 fn() { ls **/*$1* }
 

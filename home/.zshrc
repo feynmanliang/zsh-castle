@@ -47,7 +47,7 @@ PATH=$PATH:~/.homesick/repos/myrepos/
 export NODE_PATH=/usr/lib/node_modules:$NODE_PATH
 
 # Set Java Home
-export JAVA_HOME=/usr/lib/jvm/java-default-runtime/
+export JAVA_HOME=/usr/lib/jvm/default-runtime/
 
 # Set Go path
 export GOPATH=~/go
