@@ -101,6 +101,9 @@ rbenv() {
 # kubectl completions
 # source <(kubectl completion zsh)
 
+# kiex - elixir version manager
+test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
+
 
 # Print system info
 if [ "$PS1" ]; then
