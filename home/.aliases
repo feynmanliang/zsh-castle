@@ -26,7 +26,7 @@ alias ze='vim ~/.zshrc'
 alias zr='source ~/.zshrc'
 
 # Common shell functions
-alias less='less -r'
+# alias less='less -r'
 alias tf='tail -f'
 alias l='less'
 alias lh='ls -alt | head' # see the last modified files
@@ -77,18 +77,6 @@ alias ipythonnb="ipython notebook --ip=127.0.0.1 --pylab inline"
 # secure ssh dns
 alias ssh="TERM=xterm-256color ssh-dnssec.sh"
 
-# color tmux
-alias tmux="TERM=screen-256color-bce tmux"
-# attach to tmux
-# alias at="tmux new-session -t \#Prezto || tmux new-session -s \#Prezto"
-at() {
-  if [ -z "$*" ]; then
-    tmux attach-session -t \#Prezto || tmux new-session -s \#Prezto
-  else
-    tmux attach-session -t "$*" || tmux new-session -s "$*"
-  fi
-}
-
 # Pacman alias examples
 alias pacupg='sudo pacmatic -Syu'		# Synchronize with repositories and then upgrade packages that are out of date on the local system.
 alias pacin='sudo pacmatic -S'		# Install specific package(s) from the repositories
@@ -131,13 +119,6 @@ alias daily="sudo pacmatic -Syu; sudo aura -Akua; sudo paccache -rvk3; sudo pacm
 alias startvncslim="sudo x11vnc -auth /var/run/slim.auth -display :0 -usepw -many" # uses SLIM Xauth
 alias startvnc="x11vnc -auth /home/fliang/.Xauthority -display :0 -usepw -many" # uses fliang user Xauth
 
-# mount amherst college u drive
-alias mntudrive="mkdir ~/userfiles && sudo mount -t cifs //userfiles.amherst.edu/fliang14 ~/userfiles -o username=fliang14,workgroup=amherst"
-alias umntudrive="sudo umount ~/userfiles && rmdir ~/userfiles"
-
-# flush DNS
-alias flushdns="sudo pdnsd-ctl empty-cache; sudo systemctl restart pdnsd"
-
 # wget entire directory tree recursively
 alias wgetdir="wget -m -e robots=off -nH --cut-dirs=2 --user-agent=Mozilla/5.0 --no-parent --reject \"index.html*\""
 
@@ -160,5 +141,33 @@ alias ipython="ipython --TerminalInteractiveShell.editing_mode=vi"
 # usage: fn foo
 # to find all files containing 'foo' in the name
 fn() { ls **/*$1* }
+
+# FZF tmux
+tm() {
+  local session
+  newsession=${1:-new}
+  session=$(tmux list-sessions -F "#{session_name}" | \
+    fzf --query="$1" --select-1 --exit-0) &&
+    tmux attach-session -t "$session" || tmux new-session -s $newsession
+}
+
+# FZF git logs
+fzf_log() {
+  hash=$(git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |  fzf | awk '{print $1}')
+  echo $hash | xclip
+  git showtool $hash
+}
+
+# fshow - git commit browser
+fshow() {
+  git log --graph --color=always \
+      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+      --bind "ctrl-m:execute:
+                (grep -o '[a-f0-9]\{7\}' | head -1 |
+                xargs -I % sh -c 'git show --color=always %') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
 
 alias ucbvpn="sudo openconnect ucbvpn.berkeley.edu --user feynman --interface vpn0 "
