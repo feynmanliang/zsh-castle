@@ -52,7 +52,7 @@ export JAVA_HOME=/usr/lib/jvm/default-runtime/
 # Set Go path
 export GOPATH=~/go
 
-# Add pipsi binaries to path
+# Add pipsi/stack binaries to path
 export PATH=~/.local/bin:~/bin:$PATH
 
 # Set GPG TTY
