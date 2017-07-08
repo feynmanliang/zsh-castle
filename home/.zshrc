@@ -62,10 +62,12 @@ export GPG_TTY=$(tty)
 gpg-connect-agent updatestartuptty /bye >/dev/null
 
 # hub
-eval "$(hub alias -s)"
+if type "hub" &> /dev/null; then
+  eval "$(hub alias -s)"
+fi
 
 # aws competions
-source /usr/bin/aws_zsh_completer.sh
+test -s "/usr/bin/aws_zsh_completer.sh" && source /usr/bin/aws_zsh_completer.sh
 
 # fuzzy finder
 # Use ag instead of the default find command for listing candidates.
@@ -87,6 +89,7 @@ nvm() {
 
 # pyenv
 pyenv() {
+  export PATH="/home/feynman/.pyenv/bin:$PATH"
   eval "$(command pyenv init -)"
   eval "$(command pyenv virtualenv-init -)"
   pyenv $@
@@ -99,14 +102,16 @@ rbenv() {
 }
 
 # kubectl completions
-# source <(kubectl completion zsh)
+if type "kubectl" &> /dev/null; then
+  source <(kubectl completion zsh)
+fi
 
 # kiex - elixir version manager
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
 
 
 # Print system info
-if [ "$PS1" ]; then
+if [ "$PS1" ] && type "alsi" &> /dev/null; then
   alsi
 fi
 
