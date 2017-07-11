@@ -59,7 +59,9 @@ export PATH=~/.local/bin:~/bin:$PATH
 export GPG_TTY=$(tty)
 
 # Refresh gpg-agent tty in case user switches into an X session
-gpg-connect-agent updatestartuptty /bye >/dev/null
+if type "gpg-connect-agent" &> /dev/null; then
+  gpg-connect-agent updatestartuptty /bye >/dev/null
+fi
 
 # hub
 if type "hub" &> /dev/null; then
