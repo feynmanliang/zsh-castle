@@ -9,3 +9,5 @@
 if [ -e /etc/profile ]; then
   source /etc/profile
 fi
+
+export PATH="$HOME/.cargo/bin:$PATH"

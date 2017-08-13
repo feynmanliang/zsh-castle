@@ -63,6 +63,10 @@ if type "gpg-connect-agent" &> /dev/null; then
   gpg-connect-agent updatestartuptty /bye >/dev/null
 fi
 
+# GPG 2.1.x SSH support
+# See : http://incenp.org/notes/2015/gnupg-for-ssh-authentication.html
+export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
+
 # hub
 if type "hub" &> /dev/null; then
   eval "$(hub alias -s)"
@@ -85,7 +89,8 @@ _fzf_compgen_path() {
 
 # NVM
 nvm() {
-  [ -s "/usr/share/nvm/init-nvm.sh" ] && source "/usr/share/nvm/init-nvm.sh"
+  export NVM_DIR="$HOME/.nvm"
+  . "/usr/local/opt/nvm/nvm.sh"
   nvm $@
 }
 

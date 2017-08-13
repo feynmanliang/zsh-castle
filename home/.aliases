@@ -31,7 +31,7 @@ alias tf='tail -f'
 alias l='less'
 alias lh='ls -alt | head' # see the last modified files
 alias cl='clear'
-alias open='xdg-open'
+#alias open='xdg-open'
 
 # Zippin
 alias gz='tar -zcvf'
@@ -75,7 +75,7 @@ alias secure_chromium="chromium --proxy-server=socks://localhost:4711"
 alias ipythonnb="ipython notebook --ip=127.0.0.1 --pylab inline"
 
 # secure ssh dns
-alias ssh="TERM=xterm-256color ssh-dnssec.sh"
+#alias ssh="TERM=xterm-256color ssh-dnssec.sh"
 
 # Pacman alias examples
 alias pacupg='sudo pacmatic -Syu'		# Synchronize with repositories and then upgrade packages that are out of date on the local system.
@@ -171,3 +171,6 @@ FZF-EOF"
 }
 
 alias ucbvpn="sudo openconnect ucbvpn.berkeley.edu --user feynman --interface vpn0 "
+
+alias ls="exa"
+alias la="ll -a"
