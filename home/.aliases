@@ -75,7 +75,7 @@ alias secure_chromium="chromium --proxy-server=socks://localhost:4711"
 alias ipythonnb="ipython notebook --ip=127.0.0.1 --pylab inline"
 
 # secure ssh dns
-alias ssh="TERM=xterm-256color ssh-dnssec.sh"
+# alias ssh="TERM=xterm-256color ssh-dnssec.sh"
 
 # Pacman alias examples
 alias pacupg='sudo pacmatic -Syu'		# Synchronize with repositories and then upgrade packages that are out of date on the local system.
@@ -142,14 +142,14 @@ alias ipython="ipython --TerminalInteractiveShell.editing_mode=vi"
 # to find all files containing 'foo' in the name
 fn() { ls **/*$1* }
 
-# FZF tmux
-tm() {
-  local session
-  newsession=${1:-new}
-  session=$(tmux list-sessions -F "#{session_name}" | \
-    fzf --query="$1" --select-1 --exit-0) &&
-    tmux attach-session -t "$session" || tmux new-session -s $newsession
-}
+# # FZF tmux
+# tm() {
+#   local session
+#   newsession=${1:-new}
+#   session=$(tmux list-sessions -F "#{session_name}" | \
+#     fzf --query="$1" --select-1 --exit-0) &&
+#     tmux attach-session -t "$session" || tmux new-session -s $newsession
+# }
 
 # FZF git logs
 fzf_log() {
@@ -169,5 +169,7 @@ fshow() {
                 {}
 FZF-EOF"
 }
+
+alias ls="exa"
 
 alias ucbvpn="sudo openconnect ucbvpn.berkeley.edu --user feynman --interface vpn0 "
