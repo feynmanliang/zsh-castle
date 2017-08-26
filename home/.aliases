@@ -170,6 +170,6 @@ fshow() {
 FZF-EOF"
 }
 
-alias ls="exa"
-
+# alias ls="exa"
+alias vim="nvim"
 alias ucbvpn="sudo openconnect ucbvpn.berkeley.edu --user feynman --interface vpn0 "

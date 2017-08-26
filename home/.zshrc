@@ -1,4 +1,4 @@
-zmodload zsh/zprof
+set -o vi
 
 # Check if zplug is installed
 if [[ ! -d ~/.zplug ]]; then
@@ -51,6 +51,16 @@ zplug 'BurntSushi/ripgrep', \
 zplug check || zplug install
 zplug load
 
+if zplug check "creationix/nvm" && [[ $(nvm current) == "system" ]]; then
+    echo "Installting nvm latest node.js verion"
+    nvm install node
+    nvm alias default node
+fi
+
+if command -v rbenv &> /dev/null; then
+    eval "$(rbenv init - zsh --no-rehash)"
+fi
+
 [[ -f "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
 # [[ -f "${HOME}/.completions" ]] && source "${HOME}/.completions"
 # [[ -f "${HOME}/.extra" ]] && source "${HOME}/.extra"
@@ -59,4 +69,7 @@ export HISTFILE="$HOME/.zhistory"
 export HISTSIZE=100000
 export SAVEHIST=$HISTSIZE
 
-export PATH="$PATH:$HOME/.fzf/bin"
+export EDITOR="nvim"
+
+export PATH="$PATH:$HOME/bin:$HOME/.fzf/bin"
+export PATH="$HOME/.rbenv/shims:$PATH"
