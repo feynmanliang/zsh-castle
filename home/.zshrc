@@ -49,8 +49,9 @@ export NODE_PATH=/usr/lib/node_modules:$NODE_PATH
 # Set Java Home
 export JAVA_HOME=/usr/lib/jvm/default-runtime/
 
-# Set Go path
+# Set Go path and add GOPATH/bin to path
 export GOPATH=~/go
+export PATH=$PATH:~/go/bin
 
 # Add pipsi/stack binaries to path
 export PATH=~/.local/bin:~/bin:$PATH

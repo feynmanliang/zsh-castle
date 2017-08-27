@@ -77,6 +77,9 @@ alias ipythonnb="ipython notebook --ip=127.0.0.1 --pylab inline"
 # secure ssh dns
 alias ssh="TERM=xterm-256color ssh-dnssec.sh"
 
+# xclip to clipboard
+alias xclip='xclip -selection c'
+
 # Pacman alias examples
 alias pacupg='sudo pacmatic -Syu'		# Synchronize with repositories and then upgrade packages that are out of date on the local system.
 alias pacin='sudo pacmatic -S'		# Install specific package(s) from the repositories
