@@ -72,4 +72,3 @@ export SAVEHIST=$HISTSIZE
 export EDITOR="nvim"
 
 export PATH="$PATH:$HOME/bin:$HOME/.fzf/bin"
-export PATH="$HOME/.rbenv/shims:$PATH"
