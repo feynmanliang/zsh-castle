@@ -113,6 +113,13 @@ if type "kubectl" &> /dev/null; then
   source <(kubectl completion zsh)
 fi
 
+# google cloud
+# Google Cloud SDK.
+if [[ -x "$(command -v gcloud)" ]]; then
+  source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+  source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+fi
+
 # kiex - elixir version manager
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
 
