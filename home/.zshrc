@@ -1,4 +1,5 @@
-zmodload zsh/zprof
+# uncomment to benchmark, results in `zprof` command
+# zmodload zsh/zprof
 
 export ZPLUG_HOME="$HOME/.zplug"
 export PATH="$PATH:$ZPLUG_HOME/bin"
@@ -15,6 +16,8 @@ zplug "zplug/zplug", hook-build:'zplug --self-manage'
 [[ ! -f $ZPLUG_LOADFILE ]] && touch $ZPLUG_LOADFILE
 
 zplug "denysdovhan/spaceship-zsh-theme", use:spaceship.zsh, as:theme
+SPACESHIP_TIME_SHOW=true
+SPACESHIP_EXIT_CODE_SHOW=true
 
 zplug "modules/history", from:prezto
 export HISTORY_IGNORE="(ls|cd|pwd|exit|cd ..|date|* --help)"
@@ -60,5 +63,3 @@ if (( $+commands[rbenv] )); then
 fi
 
 [[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
-
-zprof > ~/.zsh_benchmark
