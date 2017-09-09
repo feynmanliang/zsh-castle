@@ -61,5 +61,6 @@ fi
 if (( $+commands[gpg-connect-agent] )); then
   gpg-connect-agent updatestartuptty /bye >/dev/null
 fi
+export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.extra"
 
 export PATH="$HOME/.cargo/bin:$PATH"
