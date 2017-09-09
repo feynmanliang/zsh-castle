@@ -45,13 +45,6 @@ alias sgi='sudo gem install --no-ri --no-rdoc'
 # Forward port 80 to 3000
 alias portforward='sudo ipfw add 1000 forward 127.0.0.1,3000 ip from any to any 80 in'
 
-# Zeus
-alias zs='zeus server'
-alias zc='zeus console'
-
-# Rspec
-alias rs='rspec spec'
-
 # Use Ctrl-x,Ctrl-l to get the output of the last command
 zmodload -i zsh/parameter
 insert-last-command-output() {
@@ -63,35 +56,13 @@ bindkey "^X^L" insert-last-command-output
 # Override rm -i alias which makes rm prompt for every action
 alias rm='nocorrect rm'
 
-# Use zmv for massinve renaming
+# Use zmv for massive renaming
 autoload -U zmv
 alias zmv="noglob zmv -W"
 
 # SOCKS tunnel on 4711
 alias sshtunnel="ssh -ND 4711 -v feynmanliang"
 alias secure_chromium="chromium --proxy-server=socks://localhost:4711"
-
-# ipython notebook
-alias ipythonnb="ipython notebook --ip=127.0.0.1 --pylab inline"
-
-# secure ssh dns
-# alias ssh="TERM=xterm-256color ssh-dnssec.sh"
-
-# Pacman alias examples
-alias pacupg='sudo pacmatic -Syu'		# Synchronize with repositories and then upgrade packages that are out of date on the local system.
-alias pacin='sudo pacmatic -S'		# Install specific package(s) from the repositories
-alias pacins='sudo pacmatic -U'		# Install specific package not from the repositories but from a file
-alias pacre='sudo pacmatic -R'		# Remove the specified package(s), retaining its configuration(s) and required dependencies
-alias pacrem='sudo pacmatic -Rns'		# Remove the specified package(s), its configuration(s) and unneeded dependencies
-alias pacrep='pacmatic -Si'		# Display information about a given package in the repositories
-alias pacreps='pacmatic -Ss'		# Search for package(s) in the repositories
-alias pacloc='pacmatic -Qi'		# Display information about a given package in the local database
-alias paclocs='pacmatic -Qs'		# Search for package(s) in the local database
-alias paclo="pacmatic -Qdt"		# List all packages which are orphaned
-alias pacc="sudo pacmatic -Scc"		# Clean cache - delete all not currently installed package files
-alias paclf="pacmatic -Ql"		# List all files installed by a given package
-alias pacexpl="pacmatic -D --asexp"	# Mark one or more installed packages as explicitly installed
-alias pacimpl="pacmatic -D --asdep"	# Mark one or more installed packages as non explicitly installed
 
 # '[r]emove [o]rphans' - recursively remove ALL orphaned packages
 alias pacro="patcmatic -Qtdq > /dev/null && sudo pacmatic -Rns \$(pacman -Qtdq | sed -e ':a;N;$!ba;s/\n/ /g')"
@@ -142,7 +113,7 @@ alias ipython="ipython --TerminalInteractiveShell.editing_mode=vi"
 # to find all files containing 'foo' in the name
 fn() { ls **/*$1* }
 
-# # FZF tmux
+# FZF tmux
 tm() {
   local session
   newsession=${1:-new}
