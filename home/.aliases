@@ -143,13 +143,13 @@ alias ipython="ipython --TerminalInteractiveShell.editing_mode=vi"
 fn() { ls **/*$1* }
 
 # # FZF tmux
-# tm() {
-#   local session
-#   newsession=${1:-new}
-#   session=$(tmux list-sessions -F "#{session_name}" | \
-#     fzf --query="$1" --select-1 --exit-0) &&
-#     tmux attach-session -t "$session" || tmux new-session -s $newsession
-# }
+tm() {
+  local session
+  newsession=${1:-new}
+  session=$(tmux list-sessions -F "#{session_name}" | \
+    fzf --query="$1" --select-1 --exit-0) &&
+    tmux attach-session -t "$session" || tmux new-session -s $newsession
+}
 
 # FZF git logs
 fzf_log() {
@@ -170,6 +170,5 @@ fshow() {
 FZF-EOF"
 }
 
-# alias ls="exa"
 alias vim="nvim"
 alias ucbvpn="sudo openconnect ucbvpn.berkeley.edu --user feynman --interface vpn0 "

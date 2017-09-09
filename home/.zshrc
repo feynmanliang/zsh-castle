@@ -1,74 +1,84 @@
 set -o vi
 
-# Check if zplug is installed
-if [[ ! -d ~/.zplug ]]; then
-    git clone https://github.com/zplug/zplug ~/.zplug
-    source ~/.zplug/init.zsh && zplug update --self
+export EDITOR="nvim"
+export VISUAL="nvim"
+export PAGER="less"
+export BROWSER='chromium'
+if [[ "$OSTYPE" == darwin* ]]; then
+  export BROWSER='open'
+fi
+if [[ -z "$LANG" ]]; then
+  export LANG='en_US.UTF-8'
 fi
 
-# Load zplug
-source ~/.zplug/init.zsh
+export LESS=' -g -i -M -R -S -w -z-4'
+if (( $#commands[(i)lesspipe(|.sh)] )); then
+  export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
+fi
+
+export ZPLUG_HOME="${HOME}/.zplug"
+
+if [[ ! -d "${ZPLUG_HOME}" ]]; then
+    git clone https://github.com/zplug/zplug ~/.zplug
+    source "${ZPLUG_HOME}/init.zsh" && zplug update
+else
+    source "${ZPLUG_HOME}/init.zsh"
+fi
+
+zplug "zplug/zplug", hook-build:'zplug --self-manage'
 
 zplug "mafredri/zsh-async", on:denysdovhan/spaceship-zsh-theme
 zplug "denysdovhan/spaceship-zsh-theme", use:spaceship.zsh, from:github, as:theme, defer:3
 
+zplug "lib/history", from:oh-my-zsh
+export HISTORY_IGNORE="(ls|cd|pwd|exit|cd ..|date|* --help)"
 
-zplug "plugins/git", from:oh-my-zsh, if:"[[ $(command -v git) ]]"
-zplug "tj/git-extras", use:"etc/git-extras-completion.zsh", defer:3, if:"[[ $(command -v git) ]]"
-zplug "paulirish/git-open", as:plugin, if:"[[ $(command -v git) ]]"
+zplug "junegunn/fzf", use:"shell/*.zsh", defer:3, if:"[[ (( $+commands[fzf] )) ]]"
+if (( $+commands[fzf] )); then
+    if (( $+commands[rg] )); then
+        export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!{.git,node_modules}/*" 2> /dev/null'
+        export FZF_CTRL_T_COMMAND='rg --files --hidden --follow --glob "!{.git,node_modules}/*" 2> /dev/null'
+    fi
+    if (( $+commands[bfs] )); then
+        export FZF_ALT_C_COMMAND="bfs -type d -nohidden"
+    fi
+fi
 
-zplug "plugins/tmux", from:oh-my-zsh, if:"[[ $(command -v tmux) ]]"
-zplug "tmuxinator/tmuxinator", use:"completion/tmuxinator.zsh", defer:3, if:"[[ $(command -v tmuxinator) ]]"
-
-zplug "plugins/docker",            from:oh-my-zsh
-zplug "plugins/docker-compose",    from:oh-my-zsh
+zplug "modules/editor", from:prezto
+zstyle ':prezto:module:editor' key-bindings 'vi'
+zstyle ':prezto:module:editor' dot-expansion 'yes'
 
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
-zplug "plugins/common-aliases",    from:oh-my-zsh
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-zplug "creationix/nvm", use:nvm.sh
-zplug "junegunn/fzf", use:"shell/*.zsh"
+zplug "modules/utility", from:prezto
+zstyle ':prezto:*:*' color 'yes'
+zplug "supercrabtree/k"
 
 zplug "djui/alias-tips"
 
-zplug "ogham/exa", \
-    as:command, \
-    rename-to:"exa", \
-    from:gh-r
-
-zplug "stedolan/jq", \
-    from:gh-r, \
-    as:command, \
-    rename-to:jq
-
-zplug 'BurntSushi/ripgrep', \
-    from:gh-r, \
-    as:command, \
-    rename-to:"rg"
-
-zplug check || zplug install
-zplug load
-
-if zplug check "creationix/nvm" && [[ $(nvm current) == "system" ]]; then
-    echo "Installting nvm latest node.js verion"
-    nvm install node
-    nvm alias default node
-fi
-
-if command -v rbenv &> /dev/null; then
-    eval "$(rbenv init - zsh --no-rehash)"
-fi
-
+zplug "plugins/common-aliases", from:oh-my-zsh
 [[ -f "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
+
+zplug "modules/git", from:prezto, if:"[[ (( $+commands[git] )) ]]"
+zplug "tj/git-extras", use:"bin/*", as:command, hook-build:"make install PREFIX=$HOME/.git-extras", if:"[[ (( $+commands[git] )) ]]"
+zplug "tj/git-extras", use:"etc/git-extras-completion.zsh", defer:3, if:"[[ (( $+commands[git] )) ]]"
+
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+if (( $+commands[pyenv] )); then eval "$(pyenv init -)"; fi
+if (( $+commands[pyenv-virtualenv-init] )); then eval "$(pyenv virtualenv-init -)"; fi
+
+# zplug "creationix/nvm", use:nvm.sh, if:"[[ (( $+commands[nvm] )) ]]"
+
+if (( $+commands[rbenv] )); then
+    eval "$(rbenv init -)"
+fi
+zplug "tmuxinator/tmuxinator", use:"completion/tmuxinator.zsh", defer:3, if:"[[ (( $+commands[tmuxinator] )) ]]"
+
 # [[ -f "${HOME}/.completions" ]] && source "${HOME}/.completions"
 # [[ -f "${HOME}/.extra" ]] && source "${HOME}/.extra"
 
-export HISTFILE="$HOME/.zhistory"
-export HISTSIZE=100000
-export SAVEHIST=$HISTSIZE
 
-export EDITOR="nvim"
-
-export PATH="$PATH:$HOME/bin:$HOME/.fzf/bin"
+zplug check || zplug install
+zplug load
