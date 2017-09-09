@@ -75,7 +75,7 @@ alias secure_chromium="chromium --proxy-server=socks://localhost:4711"
 alias ipythonnb="ipython notebook --ip=127.0.0.1 --pylab inline"
 
 # secure ssh dns
-#alias ssh="TERM=xterm-256color ssh-dnssec.sh"
+# alias ssh="TERM=xterm-256color ssh-dnssec.sh"
 
 # Pacman alias examples
 alias pacupg='sudo pacmatic -Syu'		# Synchronize with repositories and then upgrade packages that are out of date on the local system.
@@ -142,7 +142,7 @@ alias ipython="ipython --TerminalInteractiveShell.editing_mode=vi"
 # to find all files containing 'foo' in the name
 fn() { ls **/*$1* }
 
-# FZF tmux
+# # FZF tmux
 tm() {
   local session
   newsession=${1:-new}
@@ -151,26 +151,32 @@ tm() {
     tmux attach-session -t "$session" || tmux new-session -s $newsession
 }
 
-# FZF git logs
-fzf_log() {
-  hash=$(git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |  fzf | awk '{print $1}')
-  echo $hash | xclip
-  git showtool $hash
+# Ctrl-G Ctrl-H: fzf-ghq
+fzf-ghq() {
+  local selected_dir=$(ghq list | fzf --query="$LBUFFER")
+
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd $(ghq root)/${selected_dir}"
+    zle accept-line
+  fi
+
+  zle reset-prompt
+}
+zle -N fzf-ghq
+bindkey '^g^h' fzf-ghq
+
+# hub
+if (( $+commands[hub] )); then
+  eval "$(hub alias -s)"
+fi
+
+unalias z 2> /dev/null
+z() {
+  [ $# -gt 0 ] && _z "$*" && return
+  cd "$(_z -l 2>&1 | fzf --height 40% --reverse --inline-info +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
 }
 
-# fshow - git commit browser
-fshow() {
-  git log --graph --color=always \
-      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-      --bind "ctrl-m:execute:
-                (grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % sh -c 'git show --color=always %') << 'FZF-EOF'
-                {}
-FZF-EOF"
-}
-
+alias ls="ls --color=auto"
+alias vim="nvim"
 alias ucbvpn="sudo openconnect ucbvpn.berkeley.edu --user feynman --interface vpn0 "
-
-alias ls="exa"
-alias la="ll -a"
+alias mux="tmuxinator"

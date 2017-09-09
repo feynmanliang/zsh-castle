@@ -1,117 +1,57 @@
-#
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
+# uncomment to benchmark, results in `zprof` command
+# zmodload zsh/zprof
 
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
-# Customize to your needs...
-
-# Include personal settings (customize ~/.secrets as needed)
-if [ -e ~/.secrets/zsh_env ]; then
-  source ~/.secrets/zsh_env
-fi
-
-# Aliases
-if [ -e ~/.aliases ]; then
-  source ~/.aliases
-fi
-
-# Bind ctrl-r and ctrl-s to history search
-if (( $+widgets[history-incremental-pattern-search-backward] )); then
-  bindkey "^r" history-incremental-pattern-search-backward
-  bindkey "^s" history-incremental-pattern-search-forward
+export ZPLUG_HOME="$HOME/.zplug"
+export PATH="$PATH:$ZPLUG_HOME/bin"
+if [[ ! -d "$ZPLUG_HOME" ]]; then
+    git clone https://github.com/zplug/zplug ~/.zplug
+    source "$ZPLUG_HOME/init.zsh" && zplug update
 else
-  bindkey "^r" history-incremental-search-backward
-  bindkey "^s" history-incremental-search-forward
+    source "$ZPLUG_HOME/init.zsh"
+fi
+zplug "zplug/zplug", hook-build:'zplug --self-manage'
+
+# NOTE: this is a hack to prevent _-zplug::log::write::info taking up time
+# see __zplug::io::file::load()
+[[ ! -f $ZPLUG_LOADFILE ]] && touch $ZPLUG_LOADFILE
+
+zplug "denysdovhan/spaceship-zsh-theme", use:spaceship.zsh, as:theme
+SPACESHIP_TIME_SHOW=true
+SPACESHIP_EXIT_CODE_SHOW=true
+
+zplug "modules/history", from:prezto
+export HISTORY_IGNORE="(ls|cd|pwd|exit|cd ..|date|* --help)"
+
+# Set vi keymaps,
+zplug "modules/editor", from:prezto
+zstyle ':prezto:module:editor' key-bindings 'vi'
+zstyle ':prezto:module:editor' dot-expansion 'yes'
+
+zplug "zsh-users/zsh-syntax-highlighting", defer:3
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+
+export PATH="$PATH:/home/fliang/.fzf/bin"
+zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
+if (( $+commands[fzf] )); then
+    if (( $+commands[rg] )); then
+        export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!{.git,node_modules}/*" 2> /dev/null'
+        export FZF_CTRL_T_COMMAND='rg --files --hidden --follow --glob "!{.git,node_modules}/*" 2> /dev/null'
+    fi
+    if (( $+commands[bfs] )); then
+        export FZF_ALT_C_COMMAND="bfs -type d -nohidden"
+    fi
 fi
 
-#
-# PacMatic - don't let pacman clobber the system!
-#
-export warn_time="86400"  # (seconds)
-export pacman_program="aura"
+zplug "rupa/z", use:z.sh
 
-#
-# homeshick and mr
-#
-source ~/.homesick/repos/homeshick/homeshick.sh
-PATH=$PATH:~/.homesick/repos/myrepos/
+zplug "supercrabtree/k"
 
-# Node Modules
-export NODE_PATH=/usr/lib/node_modules:$NODE_PATH
+zplug "djui/alias-tips"
+zplug "simnalamburt/cgitc"
 
-# Set Java Home
-export JAVA_HOME=/usr/lib/jvm/default-runtime/
-
-# Set Go path
-export GOPATH=~/go
-
-# Add pipsi/stack binaries to path
-export PATH=~/.local/bin:~/bin:$PATH
-
-# Set GPG TTY
-export GPG_TTY=$(tty)
-
-# Refresh gpg-agent tty in case user switches into an X session
-if type "gpg-connect-agent" &> /dev/null; then
-  gpg-connect-agent updatestartuptty /bye >/dev/null
-fi
-
-# GPG 2.1.x SSH support
-# See : http://incenp.org/notes/2015/gnupg-for-ssh-authentication.html
-export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
-
-# hub
-if type "hub" &> /dev/null; then
-  eval "$(hub alias -s)"
-fi
-
-# aws competions
-test -s "/usr/bin/aws_zsh_completer.sh" && source /usr/bin/aws_zsh_completer.sh
-
-# fuzzy finder
-# Use ag instead of the default find command for listing candidates.
-# - The first argument to the function is the base path to start traversal
-# - Note that ag only lists files not directories
-# - See the source code (completion.{bash,zsh}) for the details.
-_fzf_compgen_path() {
-  ag -g "" "$1"
-}
-
-# Fuzzy finder
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# NVM
-nvm() {
-  export NVM_DIR="$HOME/.nvm"
-  . "/usr/local/opt/nvm/nvm.sh"
-  nvm $@
-}
-
-# pyenv
-pyenv() {
-  export PATH="/home/feynman/.pyenv/bin:$PATH"
-  eval "$(command pyenv init -)"
-  eval "$(command pyenv virtualenv-init -)"
-  pyenv $@
-}
-
-# rbenv
-rbenv() {
-  eval "$(command rbenv init -)"
-  rbenv $@
-}
-
-# kubectl completions
-if type "kubectl" &> /dev/null; then
-  source <(kubectl completion zsh)
-fi
+export N_PREFIX=$HOME
+zplug "tj/n", use:"bin/*", as:command
 
 # google cloud
 # Google Cloud SDK.
@@ -119,13 +59,13 @@ if [[ -x "$(command -v gcloud)" ]]; then
   source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
   source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 fi
+zplug load
 
-# kiex - elixir version manager
-test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+if (( $+commands[pyenv] )); then eval "$(pyenv init -)"; fi
 
-
-# Print system info
-if [ "$PS1" ] && type "alsi" &> /dev/null; then
-  alsi
+if (( $+commands[rbenv] )); then
+    eval "$(rbenv init -)"
 fi
 
+[[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
