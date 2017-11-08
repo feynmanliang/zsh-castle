@@ -69,3 +69,5 @@ if (( $+commands[rbenv] )); then
 fi
 
 [[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
