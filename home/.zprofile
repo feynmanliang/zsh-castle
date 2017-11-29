@@ -18,7 +18,7 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 export PAGER="less"
 
-export BROWSER='chromium'
+export BROWSER='chromium-browser'
 
 if [[ "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'

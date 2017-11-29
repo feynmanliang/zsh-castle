@@ -84,7 +84,7 @@ alias pacunlock="sudo rm /var/lib/pacman/db.lck"   # Delete the lock file /var/l
 alias paclock="sudo touch /var/lib/pacman/db.lck"  # Create the lock file /var/lib/pacman/db.lck
 
 # update, clean and optimize pacman, rebuild index, free memory
-alias daily="sudo pacmatic -Syu; sudo aura -Akua; sudo paccache -rvk3; sudo pacman-optimize; sudo updatedb; ~/bin/freemem"
+alias daily="sudo apt-get update && sudo apt-get upgrade"
 
 # start VNC server
 alias startvncslim="sudo x11vnc -auth /var/run/slim.auth -display :0 -usepw -many" # uses SLIM Xauth
@@ -151,3 +151,4 @@ alias ls="ls --color=auto"
 alias vim="nvim"
 alias ucbvpn="sudo openconnect ucbvpn.berkeley.edu --user feynman --interface vpn0 "
 alias mux="tmuxinator"
+alias chromium="chromium-browser"
