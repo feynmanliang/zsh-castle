@@ -31,6 +31,10 @@ zplug "zsh-users/zsh-syntax-highlighting", defer:3
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-completions"
 
+zplug 'BurntSushi/ripgrep', \
+    from:gh-r, \
+    as:command, \
+    rename-to:"rg"
 export PATH="$PATH:$HOME/.fzf/bin"
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
 if (( $+commands[fzf] )); then
