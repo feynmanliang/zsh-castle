@@ -12,3 +12,4 @@
 if [[ $SHLVL == 1 && ! -o LOGIN ]]; then
     source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
+export PATH="$PATH:$HOME/.pyenv/bin"
