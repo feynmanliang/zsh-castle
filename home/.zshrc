@@ -58,15 +58,13 @@ zplug "stedolan/jq", \
   from:gh-r, \
   as:command, \
   rename-to:jq
+
 zplug "fiatjaf/jiq", \
   on:"stedolan/jq", \
   as:command, \
   hook-build:"cd cmd/jiq && go get -d && go build && cd ../..", \
   use:"cmd/jiq/jiq", \
   rename-to:jiq
-
-export N_PREFIX=$HOME
-zplug "tj/n", use:"bin/*", as:command
 
 zplug "asdf-vm/asdf", \
   at:v0.4.0,\
@@ -78,6 +76,12 @@ if [[ -x "$(command -v gcloud)" ]]; then
   source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
   source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 fi
+
+zplug "motemen/ghq", \
+    as:command, \
+    from:gh-r, \
+    rename-to:ghq
+
 zplug load
 
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1

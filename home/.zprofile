@@ -29,6 +29,8 @@ export LC_ALL='en_US.UTF-8'
 
 export PATH=$HOME/bin:$PATH
 
+export PATH=$HOME/.pyenv/bin:$PATH
+
 if (( $+commands[yarn] )); then
     export PATH=$PATH:$HOME/config/yarn/global/node_modules/.bin
 fi
