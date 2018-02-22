@@ -44,6 +44,10 @@ if (( $+commands[go])); then
   export PATH=$PATH:$GOPATH/bin
 fi
 
+if (( $+commands[stack])); then
+  export PATH=$PATH:$HOME/.local/bin
+fi
+
 export LESS=' -g -i -M -R -S -w -z-4'
 if (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
