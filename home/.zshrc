@@ -61,9 +61,6 @@ zplug "fiatjaf/jiq", \
   use:"cmd/jiq/jiq", \
   rename-to:jiq
 
-export N_PREFIX=$HOME
-zplug "tj/n", use:"bin/*", as:command
-
 zplug "asdf-vm/asdf", \
   at:v0.4.0,\
   use:asdf.sh
