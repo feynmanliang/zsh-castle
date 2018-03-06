@@ -48,6 +48,10 @@ if (( $+commands[stack])); then
   export PATH=$PATH:$HOME/.local/bin
 fi
 
+if (( $+commands[yarn])); then
+  export PATH=$PATH:$HOME/.yarn/bin
+fi
+
 export LESS=' -g -i -M -R -S -w -z-4'
 if (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
@@ -67,7 +71,7 @@ if (( $+commands[gpg-connect-agent] )); then
   gpg-connect-agent updatestartuptty /bye >/dev/null
 fi
 
-# use gpg-agent to replace ssh-agent
+# Set SSH agent to use gpg-agent
 unset SSH_AGENT_PID
 if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
