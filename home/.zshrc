@@ -31,6 +31,10 @@ zplug "zsh-users/zsh-syntax-highlighting", defer:3
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-completions"
 
+zplug 'BurntSushi/ripgrep', \
+    from:gh-r, \
+    as:command, \
+    rename-to:"rg"
 export PATH="$PATH:$HOME/.fzf/bin"
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
 if (( $+commands[fzf] )); then
@@ -54,6 +58,7 @@ zplug "stedolan/jq", \
   from:gh-r, \
   as:command, \
   rename-to:jq
+
 zplug "fiatjaf/jiq", \
   on:"stedolan/jq", \
   as:command, \
@@ -64,6 +69,11 @@ zplug "fiatjaf/jiq", \
 zplug "asdf-vm/asdf", \
   at:v0.4.0,\
   use:asdf.sh
+
+zplug "motemen/ghq", \
+    as:command, \
+    from:gh-r, \
+    rename-to:ghq
 
 zplug load
 
