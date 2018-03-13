@@ -31,6 +31,10 @@ export PATH=$HOME/bin:$PATH
 
 export PATH=$HOME/.pyenv/bin:$PATH
 
+if (( $+commands[pyenv] )); then
+    export PYENV_ROOT=$HOME/.pyenv
+fi
+
 if (( $+commands[yarn] )); then
     export PATH=$PATH:$HOME/config/yarn/global/node_modules/.bin
 fi
