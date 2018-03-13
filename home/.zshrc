@@ -70,13 +70,6 @@ zplug "asdf-vm/asdf", \
   at:v0.4.0,\
   use:asdf.sh
 
-# google cloud
-# Google Cloud SDK.
-if [[ -x "$(command -v gcloud)" ]]; then
-  source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-  source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-fi
-
 zplug "motemen/ghq", \
     as:command, \
     from:gh-r, \
