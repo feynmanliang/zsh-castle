@@ -59,13 +59,6 @@ zplug "stedolan/jq", \
   as:command, \
   rename-to:jq
 
-zplug "fiatjaf/jiq", \
-  on:"stedolan/jq", \
-  as:command, \
-  hook-build:"cd cmd/jiq && go get -d && go build && cd ../..", \
-  use:"cmd/jiq/jiq", \
-  rename-to:jiq
-
 zplug "asdf-vm/asdf", \
   at:v0.4.0,\
   use:asdf.sh
