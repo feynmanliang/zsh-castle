@@ -29,8 +29,6 @@ export LC_ALL='en_US.UTF-8'
 
 export PATH=$HOME/bin:$PATH
 
-export PATH=$HOME/.pyenv/bin:$PATH
-
 if (( $+commands[pyenv] )); then
     export PYENV_ROOT=$HOME/.pyenv
 fi
@@ -80,3 +78,5 @@ unset SSH_AGENT_PID
 if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 fi
+
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"

@@ -59,6 +59,8 @@ zplug "stedolan/jq", \
   as:command, \
   rename-to:jq
 
+zplug "pyenv/pyenv", as:"command", use:"bin/*"
+
 zplug "asdf-vm/asdf", \
   at:v0.4.0,\
   use:asdf.sh
@@ -71,7 +73,12 @@ zplug "motemen/ghq", \
 zplug load
 
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-if (( $+commands[pyenv] )); then eval "$(pyenv init -)"; fi
+if (( $+commands[pyenv] )); then
+  eval "$(pyenv init -)";
+
+  # set default python
+  # pyenv shell 2.7.14
+fi
 
 if (( $+commands[rbenv] )); then
     eval "$(rbenv init -)"
@@ -80,3 +87,9 @@ fi
 [[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/feynman/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/feynman/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/feynman/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/feynman/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
